@@ -17,6 +17,9 @@ class Category(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	def get_absolute_url(self):
+		return reverse('category_detail', kwargs={'category_slug':self.slug})
+
 def pre_save_category_slug(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		slug = slugify(translit(unicode(instance.name), reversed=True))
@@ -55,3 +58,6 @@ class Product(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+	def get_absolute_url(self):
+		return reverse('product_detail', kwargs={'product_slug': self.slug})

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="col-sm-12">
+		<h2>{{ category.name }}</h2>
+		<hr>
+
+		{% for product in products_of_category %}
+		<div class="col-sm-4">
+			<img src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
+			<h4>{{product.title}}</h4>
+			<p>Price:{{product.price}}</p>
+			<a href="#" class="text-center"><button class="btn btn-danger">Add to Cart</button></a>
+		</div>
+		{% endfor %}
+
+	</div>
+{% endblock content%}

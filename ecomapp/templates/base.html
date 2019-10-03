@@ -6,25 +6,33 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 </head>
 <body>
-	<h1>Categories</h1>
-	{% for category in categories %}
-		<a href="">{{category.name}}</a>
-	{% endfor %}
-	<hr>
-	<div class="products">
-		<h1>Products</h1>
-		{% for product in products %}
-		<div class="card" style="width: 18rem;">
-		  <img src="{{product.image.url}}" class="card-img-top" alt="...">
-		  <div class="card-body">
-		    <h5 class="card-title">{{product.title}}</h5>
-		    <p>{{product.price}}</p>
-		    <p class="card-text">{{product.description}}</p>
-		    <a href="#" class="btn btn-primary">Go somewhere</a>
-		  </div>
-		</div>
-		{% endfor %}
-	</div>
+	<nav class="navbar navbar-light bg-light">
+	  <a class="navbar-brand" href="/">Test App</a>
+	</nav>
 
+	{% block content %}
+
+		<h1>Categories</h1>
+		{% for category in categories %}
+			<a href="{{ category.get_absolute_url }}">{{category.name}}</a>
+		{% endfor %}
+		<hr>
+		<div class="products">
+			<h1>Products</h1>
+			{% for product in products %}
+			<div class="card" style="width: 18rem;">
+			  <img src="{{product.image.url}}" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">{{product.title}}</h5>
+			    <p>{{product.price}}</p>
+			    <p class="card-text">{{product.description}}</p>
+			    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Know more</a>
+			  </div>
+			</div>
+			{% endfor %}
+		</div>
+
+	{% endblock content %}
+	
 </body>
 </html>
