@@ -8,6 +8,9 @@
 <body>
 	<nav class="navbar navbar-light bg-light">
 	  <a class="navbar-brand" href="/">Test App</a>
+	  <ul class="nav navbar-nav navbar-right">
+	  	<li><a href='{% url "cart" %}'>Cart <span class="badge">{{ cart.items.count }}</span> </a></li>
+	  </ul>
 	</nav>
 
 	{% block content %}
@@ -34,5 +37,9 @@
 
 	{% endblock content %}
 	
+
+	<script src="{% static 'js/jquery.js' %}"></script>
+	
+
 </body>
 </html>
