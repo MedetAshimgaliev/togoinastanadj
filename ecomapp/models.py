@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
-#from django.core.urlresolvers import reverse
-from django.urls import reverse
+from django.core.urlresolvers import reverse
+#from django.urls import reverse
 from transliterate import translit
 
 # Create your models here.
@@ -47,8 +47,8 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
 	#on_delete added x 2
-	category = models.ForeignKey(Category,on_delete=models.CASCADE)
-	brands = models.ForeignKey(Brand, on_delete=models.CASCADE)
+	category = models.ForeignKey(Category)
+	brands = models.ForeignKey(Brand)
 	title = models.CharField(max_length=120)
 	slug = models.SlugField()
 	description = models.TextField()
@@ -66,7 +66,7 @@ class Product(models.Model):
 
 class CartItem(models.Model):
 	#on_delete added
-	product = models.ForeignKey(Product, on_delete=models.CASCADE)
+	product = models.ForeignKey(Product)
 	qty = models.PositiveIntegerField(default=1)
 	item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
