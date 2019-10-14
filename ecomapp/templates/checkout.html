@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class='text-center'>YOUR CHECKOUT</h3>
+<br>
+<table class='table'>
+	<tr>
+		<td class='text-center'><b>Item</b></td>
+		<td class='text-center'><b>Qty</b></td>
+		<td class='text-center'><b>Price</b></td>
+		<td class='text-center'></td>
+	</tr>
+	{% for item in cart.items.all %}
+	<tr> 
+		<td class='text-center'>{{ item.product.title }}</td>
+		<td class='text-center'>{{ item.qty }}</td>
+		<td class='text-center'>{{ item.item_total }} $</td>
+		<td></td>
+	</tr>
+	{% endfor %}
+	<tr>
+		<td></td>
+		<td class="text-center">Total:</td>
+		<td class="text-center"><strong>{{cart.cart_total}}</strong></td>
+		<td></td>
+	</tr>
+</table>
+<a href='{% url "create_order" %}'><button class="btn btn-success">Order</button></a>
+{% endblock content %}
