@@ -18,4 +18,26 @@
 	{{ form.comments|as_crispy_field }}
 	<input type="submit" name="btn btn-success" value="Submit">
 </form>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+	$(document).ready(function(){
+		$('#div_id_address').css('display', 'none')
+		$('#id_buying_type').on('click', function(){
+			buying_type = $(this).val();
+			console.log(buying_type);
+			if(buying_type == 'delivery'){
+				$('#div_id_address').css('display', 'block')
+			}
+			else{
+				$('#div_id_address').css('display', 'none')	
+			}
+		})
+		$('#id_date_month').css('width', '120px')
+		$('#id_date_month').css('display', 'inline')
+		$('#id_date_year').css('width', '100px')
+		$('#id_date_year').css('display', 'inline')
+		$('#id_date_day').css('width', '70px')
+		$('#id_date_day').css('display', 'inline')
+	})
+</script>
 {% endblock content %}
