@@ -1,6 +1,46 @@
 # -*- coding: UTF-8 -*-
 from django import forms
 from django.utils import timezone
+from django.contrib.auth.models import User
+
+class RegistrationForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput)
+	password_check = forms.CharField(widget=forms.PasswordInput)
+	class Meta:
+		model = User
+		fields = [
+			'username',
+			'password',
+			'password_check',
+			'first_name',
+			'last_name',
+			'email'
+		]
+
+	def __init__(self, *args, **kwargs):
+		super(RegistrationForm, self).__init__(*args, **kwargs)
+		self.fields['username'].label = 'Login'
+		self.fields['password'].label = 'Password'
+		self.fields['password'].help_text = 'Set secure password'
+		self.fields['password_check'].label = 'Re-type password'
+		self.fields['first_name'].label = 'First name'
+		self.fields['last_name'].label = 'Last name'
+		self.fields['email'].label = 'Email'
+		self.fields['email'].help_text = 'Please mention real e-mail address'
+
+	def clean(self):
+		username = self.cleaned_data['username']
+		password = self.cleaned_data['password']
+		password_check = self.cleaned_data['password_check']
+		email = self.cleaned_data['email']
+		if User.objects.filter(username=username).exists():
+			raise forms.ValidationError('That username already exists in the system!')
+		if User.objects.filter(email=email).exists():
+			raise forms.ValidationError('That email address already exists in the system! Use another!')
+		if password != password_check:
+			raise forms.ValidationError('Passwords does not match. Try again!')
+
+				
 
 
 class OrderForm(forms.Form):

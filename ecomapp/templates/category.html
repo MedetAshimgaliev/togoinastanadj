@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 	<div class="col-sm-12">
 		<h2>{{ category.name }}</h2>
@@ -10,9 +10,35 @@
 			<img src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
 			<h4>{{product.title}}</h4>
 			<p>Price:{{product.price}}</p>
-			<a href="#" class="text-center"><button class="btn btn-danger">Add to Cart</button></a>
+			<!-- <a href="#" class="text-center"><button class="btn btn-danger">Add to Cart</button></a> -->
+			{% if request.user.is_authenticated %}
+				<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="btn btn-danger">Add to cart</button></a>
+			{% else %}
+			    <p class="text-center">You need to be signed! Please <a href="#">Sign in</a> or <a href="#">sign up</a></p>
+			{% endif %}
 		</div>
 		{% endfor %}
 
 	</div>
+
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script>
+	$(document).ready(function(){
+		$('.add_to_cart').on('click', function(e){
+			e.preventDefault()
+			product_slug = $(this).attr('data-slug')
+			data = {
+				product_slug: product_slug
+			}
+			$.ajax({
+				type:"GET",
+				url:'{% url "add_to_cart" %}',
+				data: data,
+				success: function(data){
+					$("#cart_count").html(data.cart_total)
+				}
+			})
+		})
+	})
+	</script>
 {% endblock content%}

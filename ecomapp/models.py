@@ -126,10 +126,10 @@ class Order(models.Model):
 	last_name = models.CharField(max_length=200)
 	phone = models.CharField(max_length=20)
 	address = models.CharField(max_length=255)
-	buying_type = models.CharField(max_length=40, choices=(('Pick up', 'Pick up'), ('Delivery', 'Delivery')))
+	buying_type = models.CharField(max_length=40, choices=(('Pick up', 'Pick up'), ('Delivery', 'Delivery')),default='Pick up')
 	date = models.DateTimeField(auto_now_add=True)
 	comments = models.TextField()
-	status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOISES)
+	status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOISES, default=ORDER_STATUS_CHOISES[0][0])
 
 	def __unicode__(self):
 		return "Order No.{0}".format(str(self.id))
