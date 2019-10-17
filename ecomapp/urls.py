@@ -1,4 +1,6 @@
 from django.conf.urls import url, include
+from django.urls import reverse_lazy
+from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView
 from ecomapp.views import (
 	base_view, 
@@ -12,7 +14,8 @@ from ecomapp.views import (
 	order_create_view,
 	make_order_view,
 	account_view,
-	registration_view
+	registration_view,
+	login_view
 	)
 
 urlpatterns = [
@@ -28,5 +31,7 @@ urlpatterns = [
 	url(r'^thank_you/$', TemplateView.as_view(template_name='thank_you.html'), name='thank_you'),
 	url(r'^account/$', account_view, name='account'),
 	url(r'^registration/$', registration_view, name='registration'),
+	url(r'^login/$', login_view, name='login'),
+	url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('base')), name='logout'),
     url(r'^$', base_view, name='base'),
 ]

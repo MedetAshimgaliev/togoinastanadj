@@ -3,6 +3,25 @@ from django import forms
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
+class LoginForm(forms.Form):
+	username = forms.CharField()
+	password = forms.CharField(widget=forms.PasswordInput)
+
+	def __init__(self, *args, **kwargs):
+		super(LoginForm, self).__init__(*args, **kwargs)
+		self.fields['username'].label = 'Login'
+		self.fields['password'].label = 'Password'
+
+	def clean(self):
+		username = self.cleaned_data['username']
+		password = self.cleaned_data['password']
+		if not User.objects.filter(username=username).exists():
+			raise forms.ValidationError('Username not found!')
+		user = User.objects.get(username=username)
+		if user and not user.check_password(password):
+			raise forms.ValidationError('Wrong password!')
+
 class RegistrationForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 	password_check = forms.CharField(widget=forms.PasswordInput)
