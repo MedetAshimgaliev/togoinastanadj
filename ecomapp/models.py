@@ -16,7 +16,7 @@ class Category(models.Model):
 	name = models.CharField(max_length=100)
 	slug = models.SlugField(blank=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 
 	def get_absolute_url(self):
@@ -30,11 +30,11 @@ def pre_save_category_slug(sender, instance, *args, **kwargs):
 pre_save.connect(pre_save_category_slug, sender=Category)
 
 
-class Brand(models.Model):
-	name = models.CharField(max_length=100)
+# class Brand(models.Model):
+# 	name = models.CharField(max_length=100)
 
-	def __unicode__(self):
-		return self.name
+# 	def __str__(self):
+# 		return self.name
 
 def image_folder(instance, filename):
 	filename = instance.slug + '.' +filename.split('.')[1]
@@ -49,17 +49,17 @@ class ProductManager(models.Manager):
 class Product(models.Model):
 	#on_delete added x 2
 	category = models.ForeignKey(Category,on_delete=models.CASCADE)
-	brands = models.ForeignKey(Brand,on_delete=models.CASCADE)
+	# brands = models.ForeignKey(Brand,on_delete=models.CASCADE)
 	title = models.CharField(max_length=120)
 	slug = models.SlugField()
 	description = models.TextField()
 	image = models.ImageField(upload_to=image_folder)
-	price = models.DecimalField(max_digits=9, decimal_places=4)
+	price = models.DecimalField(max_digits=9, decimal_places=2)
 	available = models.BooleanField(default=True)
 	objects = ProductManager()
 
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.title
 
 	def get_absolute_url(self):
@@ -71,7 +71,7 @@ class CartItem(models.Model):
 	qty = models.PositiveIntegerField(default=1)
 	item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
-	def __unicode__(self):
+	def __str__(self):
 		return "Cart item product {0}".format(self.product.title)
 
 
@@ -80,7 +80,7 @@ class Cart(models.Model):
 	items = models.ManyToManyField(CartItem, blank=True)
 	cart_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
-	def __unicode__(self):
+	def __str__(self):
 		return str(self.id)
 
 	def add_to_cart(self, product_slug):
@@ -120,16 +120,17 @@ ORDER_STATUS_CHOISES = (
 			
 class Order(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	items = models.ForeignKey(Cart)
+	#on_delete added
+	items = models.ForeignKey(Cart, on_delete=models.CASCADE)
 	total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 	first_name = models.CharField(max_length=200)
 	last_name = models.CharField(max_length=200)
 	phone = models.CharField(max_length=20)
-	address = models.CharField(max_length=255)
-	buying_type = models.CharField(max_length=40, choices=(('Pick up', 'Pick up'), ('Delivery', 'Delivery')),default='Pick up')
+	# address = models.CharField(max_length=255)
+	buying_type = models.CharField(max_length=40, choices=(('On arrival', 'On arrival'),('PayPal', 'PayPal')),default='On arrival')
 	date = models.DateTimeField(auto_now_add=True)
 	comments = models.TextField()
 	status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOISES, default=ORDER_STATUS_CHOISES[0][0])
 
-	def __unicode__(self):
+	def __str__(self):
 		return "Order No.{0}".format(str(self.id))

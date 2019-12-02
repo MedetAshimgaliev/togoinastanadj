@@ -2,13 +2,17 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h3 class="text-center">New user registration</h3>
-<div class="col-sm-8 col-sm-offset-2 ">
-	<hr>
-	<form action="" method="POST">
-		{% csrf_token %}
-		{{ form|crispy }}
-		<input type="submit" class="btn btn-success btn-block" value="register">
-	</form>	
-</div>
+<section class="content bg pt-18">
+	<div class="w-90 mx-auto p-3 mb-2 bg-white text-dark border">
+		<h3 class="text-center">New user registration</h3>
+		<div class="col-sm-8 col-sm-offset-2" style="margin: 0 auto;">
+			<hr>
+			<form action="" method="POST">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<input type="submit" class="btn btn-success btn-block" value="register">
+			</form>	
+		</div>
+	</div>
+</section>
 {% endblock content %}

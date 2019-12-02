@@ -1,27 +1,83 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-	<div class="col-sm-12">
-		<h2>{{ category.name }}</h2>
-		<hr>
-
-		{% for product in products_of_category %}
-		<div class="col-sm-4">
-			<a href="{{ category.get_absolute_url }}">
-				<img src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
-			</a>
-			<h4>{{product.title}}</h4>
-			<p>Price:{{product.price}} $</p>
-			<!-- <a href="#" class="text-center"><button class="btn btn-danger">Add to Cart</button></a> -->
-			{% if request.user.is_authenticated %}
-				<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="btn btn-danger">Add to cart</button></a>
-			{% else %}
-			    <p class="text-center">You need to be signed! Please <a href="#">Sign in</a> or <a href="#">sign up</a></p>
-			{% endif %}
+	<section class="content bg pt-18">
+		<div class="w-90 mx-auto p-3 mb-2 bg-white text-dark border">
+			<h1 class="text-center font-weight-bold">{{ category.name }}</h1>
+			<p class="h4 pfair text-center m5">{% lorem %}</p>
+			<hr class="mx-auto w-50 m-5">
+			<div class="col-sm-12">
+					<hr>
+					<div class="row no-gutters">
+						<div class="col-6 col-md-3">
+							<div class="form-group w-75 mx-auto mb-5">
+							<label for="sel1" class="font-weight-bold">Departure month:</label>
+							<select class="form-control" id="sel1">
+								<option>Any</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+							</select>
+							</div>
+							<form class="w-75 mx-auto" action="/action_page.php">
+							<p class="font-weight-bold">No. of days</p>
+								<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+								<label class="custom-control-label" for="customCheck">1</label>
+								</div>
+								<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+								<label class="custom-control-label" for="customCheck">2</label>
+								</div>
+								<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+								<label class="custom-control-label" for="customCheck">3</label>
+								</div>
+								<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+								<label class="custom-control-label" for="customCheck">4</label>
+								</div>
+							</form>
+						</div>
+						{% for product in products_of_category %}
+							<div class="col-12 col-sm-6 col-md-9">
+								<!-- Tour item -->
+								<div class="d-flex mb-5">
+								<img class="tour-item-img" src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
+								<div class="col-4 p-3">
+									<h4 class="mt-4 mb-4 font-weight-bold">{{product.title}}</h4>
+									<p class="pfair">
+										{{product.description}}
+									</p>
+								</div>
+								<div class="col-3 pl-3 pt-5">
+									<ul>
+										<li>Personalised guide</li>
+										<li>Entrance tickets</li>
+										<li>Hotel transfer</li>
+										<li>Free Wi-Fi</li>
+										<li>Car depending on pax</li>
+									</ul>
+									<div class="ml-4">
+										<a href="{{ category.get_absolute_url }}">
+											<button type="button" class="btn btn-primary mt-4">FIND OUT MORE</button>
+										</a>
+										{% if request.user.is_authenticated %}
+											<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="btn super-yellow mb-4 mt-4 plr-1point2">ADD TO CART</button></a>
+										{% else %}
+											<p class="text-center">You need to be signed! Please <a href="#">Sign in</a> or <a href="#">sign up</a></p>
+										{% endif %}
+									</div>
+								</div>
+								</div>
+								<!-- End tour item -->
+							</div>
+						{% endfor %}
+					</div>
+			</div>
 		</div>
-		{% endfor %}
-
-	</div>
+	</section>
+	
 
 	<script src="{% static 'js/jquery.js' %}"></script>
 	<script>

@@ -1,44 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h3 class='text-center'>YOUR CART</h3>
-<br>
-{% if cart.items.count > 0 %}
-<div class='my-cart'>
-	<table class='table'>
-		<tr>
-			<td class='text-center'><b>Item</b></td>
-			<td class='text-center'><b>Qty</b></td>
-			<td class='text-center'><b>Price</b></td>
-			<td class='text-center'></td>
-		</tr>
-		{% for item in cart.items.all %}
-		<tr id='{{ item.product.slug }}'> 
-			<td class='text-center'>{{ item.product.title }}</td>
-			<td class='text-center'>
-				<form action='' method='GET'>
-					<input class='cart-item-qty' type='number' name='qty' data-id='{{item.id}}' value='{{item.qty}}' min='1' style="width: 50px">
-				</form>
-			</td>
-			<td class='text-center' id="cart-item-total-{{ item.id }}">{{ item.item_total }} $</td>
-			<td class='text-center'><a href='#' class="remove_from_cart" data-slug='{{ item.product.slug }}' 
-				data-id ='{{ item.product.id }}'><button class='btn btn-danger'>Удалить из корзины</button></a></td>
-		</tr>
-		{% endfor %}
-		<tr>
-			<td></td>
-			<td class="text-center">Total:</td>
-			<td class="text-center" id="cart-total-price"><strong>{{cart.cart_total}}</strong></td>
-			<td></td>
-		</tr>
-	</table>
-	<br>
-	<a href='{% url "checkout" %}'><button class="btn btn-info">Checkout</button></a>
-</div>
-<h3 class="cart-empty"></h3>
-{% else %}
-<h3 class="text-center">You got empty cart!</h3>
-{% endif %}
+<section class="content bg pt-18">
+	<div class="w-90 mx-auto p-3 mb-2 bg-white text-dark border">
+		<h3 class='text-center'>YOUR CART</h3>
+		<br>
+		{% if cart.items.count > 0 %}
+		<div class='my-cart'>
+			<table class='table'>
+				<tr>
+					<td class='text-center'><b>Item</b></td>
+					<td class='text-center'><b>Qty</b></td>
+					<td class='text-center'><b>Price</b></td>
+					<td class='text-center'></td>
+				</tr>
+				{% for item in cart.items.all %}
+				<tr id='{{ item.product.slug }}'> 
+					<td class='text-center'>{{ item.product.title }}</td>
+					<td class='text-center'>
+						<form action='' method='GET'>
+							<input class='cart-item-qty' type='number' name='qty' data-id='{{item.id}}' value='{{item.qty}}' min='1' style="width: 50px">
+						</form>
+					</td>
+					<td class='text-center' id="cart-item-total-{{ item.id }}">{{ item.item_total }} $</td>
+					<td class='text-center'><a href='#' class="remove_from_cart" data-slug='{{ item.product.slug }}' 
+						data-id ='{{ item.product.id }}'><button class='btn btn-danger'>Удалить из корзины</button></a></td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td></td>
+					<td class="text-center">Total:</td>
+					<td class="text-center" id="cart-total-price"><strong>{{cart.cart_total}}</strong></td>
+					<td></td>
+				</tr>
+			</table>
+			<br>
+			<a href='{% url "checkout" %}'><button class="btn btn-info">Checkout</button></a>
+		</div>
+		<h3 class="cart-empty"></h3>
+		{% else %}
+		<h3 class="text-center">You got empty cart!</h3>
+		{% endif %}
+	</div>
+</section>
+
+
 <script src="{% static 'js/jquery.js' %}"></script>
 <script>
 	$(document).ready(function(){

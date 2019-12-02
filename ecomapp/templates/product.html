@@ -1,23 +1,136 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-	<div class="row">
-		<div class="col-4">
-			<img src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
+	<section class="content bg pt-18">
+		<div class="w-90 mx-auto p-3 mb-2 bg-white text-dark border">
+			<div class="row no-gutters">
+				<div class="col-12 col-sm-6 col-md-9">
+					<h3 class="display-4 font-weight-bold">{{ product.title }}</h3>
+					<div id="carouselExampleIndicators" class="carousel slide mb-5 mr-5" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img class="d-block w-100" src="{{ product.image.url }}" alt="First slide" style="width: 845px; height: 506px; ">
+							</div>
+						</div>
+						<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+					<p class="h4 pfair">
+						{{ product.description }}
+					</p>
+				</div>
+				<div class="col-6 col-md-3">
+					<div class="border p-3 sticky-top">
+						<h2 class="font-weight-bold text-center">BOOK NOW</h2>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+								<label for="sel1" class="font-weight-bold">
+									<h2 class="font-weight-bold">ADULTS</h2>
+								</label>
+								<select class="form-control" id="sel1">
+									<option> </option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</select>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group">
+								<label for="sel1" class="font-weight-bold">
+									<h2 class="font-weight-bold">CHILDREN</h2>
+								</label>
+								<select class="form-control" id="sel1">
+									<option> </option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+								<label for="sel1" class="font-weight-bold">
+									<h2 class="font-weight-bold">STUDENTS</h2>
+								</label>
+								<select class="form-control" id="sel1">
+									<option> </option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</select>
+								</div>
+							</div>
+							<div class="col"></div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group w-75">
+								<label for="sel1" class="font-weight-bold">
+									<h2 class="font-weight-bold">LEAVING ON</h2>
+								</label>
+								<select class="form-control" id="sel1">
+									<option> </option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group w-50">
+								<label for="sel1" class="font-weight-bold">
+									<h2 class="font-weight-bold">PRICE</h2>
+									<p>Price: <strong>{{ product.price }} $</strong></p>
+								</label>
+								</div>
+							</div>
+						</div>
+						{% if request.user.is_authenticated %}
+						<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="mt-4 btn super-yellow">ADD TO CART</button></a>
+						{% else %}
+							<p class="text-center">You need to be signed! Please <a href='{% url "registration" %}'>register</a> or <a href='{% url "login" %}'>sign in</a></p>
+						{% endif %}
+					</div>
+				</div>
+
+
+
+
+				<!-- <div class="col-4">
+					<img src="{{ product.image.url }}" alt="" style="width: 250px;height: 250px; ">
+				</div>
+				<div class="col-8">
+					<h3 class="text-center">{{ product.title }}</h3>
+					<p>{% lorem %}</p>
+					<p>{% lorem %}</p>
+					<hr>
+					<p>Price: <strong>{{ product.price }} $</strong></p>
+					{% if request.user.is_authenticated %}
+						<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="btn btn-danger">Add to cart</button></a>
+					{% else %}
+						<p class="text-center">You need to be signed! Please <a href='{% url "registration" %}'>register</a> or <a href='{% url "login" %}'>sign in</a></p>
+					{% endif %}
+				</div> -->
+
+			</div>
 		</div>
-		<div class="col-8">
-			<h3 class="text-center">{{ product.title }}</h3>
-			<p>{% lorem %}</p>
-			<p>{% lorem %}</p>
-			<hr>
-			<p>Price: <strong>{{ product.price }} $</strong></p>
-			{% if request.user.is_authenticated %}
-				<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class="btn btn-danger">Add to cart</button></a>
-			{% else %}
-			    <p class="text-center">You need to be signed! Please <a href='{% url "registration" %}'>register</a> or <a href='{% url "login" %}'>sign in</a></p>
-			{% endif %}
-		</div>
-	</div>
+	</section>
+	
 	<script src="{% static 'js/jquery.js' %}"></script>
 	<script>
 	$(document).ready(function(){
