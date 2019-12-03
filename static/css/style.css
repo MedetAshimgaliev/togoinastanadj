@@ -160,4 +160,18 @@ img.thumb{
 	 .carousel-caption-custom-reverse h2{font-size:2rem; }
 }
 
+/* 2688x1242px at 458ppi
+@media only screen 
+    and (device-width : 414px) 
+    and (device-height : 896px) 
+    and (-webkit-device-pixel-ratio : 3) {
+        .carousel-caption-custom p{
+            display: none;
+        }
+     } */
 
+@media only screen and (min-width : 320px) and (max-width: 1242px){
+    body{
+        background-color: red;
+    }
+}
